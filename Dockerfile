@@ -1,10 +1,11 @@
-FROM n8nio/n8n
+FROM n8nio/n8n:latest
 
-# Install ffmpeg on Alpine using apk
-USER root
+WORKDIR /data
+EXPOSE 5678
 
-RUN apk update && \
-    apk add --no-cache ffmpeg
+# Render will inject $PORT automatically
+ENV N8N_PORT=$PORT
+ENV N8N_HOST=0.0.0.0
+ENV N8N_PROTOCOL=https
 
-# Switch back to default n8n user
-USER node
+CMD ["n8n", "start"]
